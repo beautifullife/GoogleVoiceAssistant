@@ -36,7 +36,7 @@ def main():
             elif "turn off the light" in text:
                 led.set_state(aiy.voicehat.LED.OFF)
             elif "blink" in text:
-                led.set_state(aiy.voicehat.LED.BLINK)
+                led.set_state(aiy.voicehat.LED.BLINK)  
             elif "repeat after me" in text:
                 aiy.audio.say(text.replace("repeat after me", "", 1))
             elif "good bye" in text:
