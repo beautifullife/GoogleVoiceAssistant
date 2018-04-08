@@ -19,6 +19,10 @@ def ping_ip(ip="127.0.0.1"):
     print("ping result:")
     subprocess.call('ping %s' % ip, shell=True)
 
+def ifconfig():
+    print("Running ifconfig...")
+    subprocess.call('ifconfig')
+
 def process_event(assistant, event):
     # get voice hat status
     status_ui = ayi.voicehat.get_status_ui()
@@ -44,6 +48,9 @@ def process_event(assistant, event):
         elif "ping localhost" in text:
             assistant.stop_conversation()
             ping_ip()
+        elif "run config" in text:
+            assistant.stop_conversation()
+            ifconfig()
 
     #thinking
     elif event.type == EvenType.ON_END_OF_UTTERANCE:
