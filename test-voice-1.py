@@ -8,7 +8,7 @@ import subprocess
 import sys
 
 import aiy.assistant.auth_helpers
-from aiy.assistant.library.event import EvenType
+from google.assistant.library.event import EvenType
 import aiy.audio
 import aiy.voicehat
 
