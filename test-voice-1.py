@@ -46,7 +46,7 @@ def process_event(assistant, event):
         # goobye
         if "good bye" in text:
             assistant.stop_conversation()
-	        return False
+            return False
         elif "ping localhost" in text:
             assistant.stop_conversation()
             ping_ip()
@@ -76,7 +76,7 @@ def main():
     with Assistant(credentials) as assistant:
         for event in assistant.start():
             if process_event(assistant, event) is False:
-		    break
+                break
 
     # loop event for process event
 
