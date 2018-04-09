@@ -32,20 +32,21 @@ def process_event(assistant, event):
     if event.type == EventType.ON_START_FINISHED:
         status_ui.status("ready")
         if sys.stdout.isatty():
-            print("Say Hey Google or Ok, Google to start...")
+            print("Say Hey Google or Ok, Google to start. Say Goobye to quit.")
         
     # listening
     elif event.type == EventType.ON_CONVERSATION_TURN_STARTED:
         status_ui.status("listening")
 
     # recorgnizing speed
-    elif event.type == EventType.ON_RECOGNIZE_SPEECH_FINISHED and event.args:
+    elif event.type == EventType.ON_RECOGNIZING_SPEECH_FINISHED and event.args:
         print("You said:", event.args["text"])
         text = event.args["text"].lower()
         # process command via text
         # goobye
         if "good bye" in text:
             assistant.stop_conversation()
+	    return False
         elif "ping localhost" in text:
             assistant.stop_conversation()
             ping_ip()
@@ -67,13 +68,15 @@ def process_event(assistant, event):
     elif event.type == EventType.ON_ASSISTANT_ERROR and event.args and event.args["is_fatal"]:
         sys.exit(1)
 
+    return True
 
 def main():
     # Authorize
-    credentials = aiy.assistant_helper.get_assistant_credentials()
+    credentials = aiy.assistant.auth_helpers.get_assistant_credentials()
     with Assistant(credentials) as assistant:
         for event in assistant.start():
-            process_event(assistant, event)
+            if process_event(assistant, event) is False:
+		break
 
     # loop event for process event
 
